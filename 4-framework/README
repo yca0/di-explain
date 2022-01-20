@@ -1,0 +1,2 @@
+This example uses [InversifyJS](https://inversify.io/) as the dependency injection framework to improve 3-di. 
+It achieves 100% test coverage except the very small index.ts file, which won't be affected by the project size.

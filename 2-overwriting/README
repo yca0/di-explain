@@ -1,0 +1,5 @@
+You can create an instance of db.Client as a global variable, and use a setter and a getter to overwrite the client instance with your mock. But this approach has several drawbacks:
+1. Unit test cannot cover the code that sets the actual client. If there are a lot of 3rd party dependencies like this, it lowers the coverage percentage.
+2. It's difficult to tell what side effect your module imports, especially in a large project. Those side effect code that are not overwritten will be executed during the test, and can damage your environment.
+
+See 3-di for a dependency injection approach.

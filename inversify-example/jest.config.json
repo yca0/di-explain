@@ -1,0 +1,11 @@
+{
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageDirectory": "cover",
+    "collectCoverageFrom": [
+        "**/*.ts",
+        "!**/node_modules/**",
+        "!src/app.ts"
+    ]
+}

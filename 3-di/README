@@ -1,0 +1,46 @@
+This example uses dependency injection pattern to make code more testable. Each module accepts dependencies as parameters, so that you can pass in mocks in unit test.
+
+Pros and cons:
+
+Pros:
+1. Each module can be fully tested, except the file that do the injection.
+2. The code that does the injection is in a specified location (in this case index.ts) so that it can be easily ignored from coverage calculation.
+3. Separation of concerns. Improve readability and code reuse.
+4. It's very unlikely that you will aciddently run side effect code in unit test.
+
+Cons:
+1. index.ts is not covered, therefore potentially it is a risk.
+2. In a large project, index.ts can contain a lot of lines which makes it difficult to read.
+
+
+The dependency injection pattern can be represented as the following form:
+```
+Provider: (Dep1, Dep2, ...) => Service
+```
+where "Dep1", "Dep2", ... are types of the dependencies; "Service" is an object that contains business logic that works with the dependencies; and "Provider" is a function that constructs "Service".
+
+A service can just a a dependency of an other module. Therefore we can write:
+```
+Provider: (Dep1, Dep2, ...) => Dep
+```
+
+In this example, we break down our initial problem into these providers:
+```
+ClientProvider: () => Client
+WorkerProvider: Client => Worker
+MainProvider: Worker => Main
+```
+
+The whole application can be written as calling these providers in a sequence:
+```
+c = ClientProvider()
+w = WorkerProvider(c)
+m = MainProvider(w)
+m()
+```
+
+Can't we create a utility function that combines all these providers and that will be our main function?
+
+Let's consider a provider as node in a graph that connects the output of a node to the matching input of other nodes. If all the nodes eventually connect to the main node, we can represent our application as a combination of the provider nodes. Obviously, this only requires each dependency defined has a coresponding provider.
+
+Fortunately, a lot of libraries already provides frameworks that achieve our goal. [InversifyJS](https://inversify.io/) is one of them.

@@ -1,0 +1,3 @@
+There is no db running in unit test environment. Once you import the db module, it will try to connect to the database and cause an error.
+
+See how "2-singleton" solve the problem.
